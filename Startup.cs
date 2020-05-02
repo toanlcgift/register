@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,12 +32,13 @@ namespace Register
             services.Configure<AppSettings>(appSettingsSection);
 
             var appSettings = appSettingsSection.Get<AppSettings>();
-            
+
             services.AddDbContext<paysysContext>(options => options.UseMySQL(appSettings.ConnectionString).EnableSensitiveDataLogging());
             System.Console.Write(appSettings.ConnectionString);
             services.AddSwaggerDocument();
-           
+
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,23 +46,16 @@ namespace Register
             })
             .AddJwtBearer(HousingJwtBearer.CreateHousingJwtBearerOptions(key));
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(opt =>
-                {
-                    opt.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
-                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    //opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+            services.AddMvc((options) => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //if (env.IsDevelopment() || env.IsStaging())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
+                app.UseOpenApi((configuration)=> { });
 
                 app.UseSwaggerUi3(settings =>
                 {
@@ -77,7 +72,6 @@ namespace Register
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
         }
     }
 }

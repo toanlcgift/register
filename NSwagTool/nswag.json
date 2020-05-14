@@ -1,5 +1,5 @@
 ﻿{
-  "runtime": "NetCore22",
+  "runtime": "NetCore31",
   "defaultVariables": "configuration=Debug",
   "documentGenerator": {
     "webApiToOpenApi": {
@@ -45,7 +45,7 @@
       "output": null,
       "outputType": "Swagger2",
       "assemblyPaths": [
-        "../bin/$(configuration)/netcoreapp2.2/DatNenWebApi.dll"
+        "../bin/$(configuration)/netcoreapp3.1/Register.dll"
       ],
       "assemblyConfig": null,
       "referencePaths": [],
@@ -130,7 +130,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": "http://3.1.49.29:6969",
       "serviceSchemes": null,
-      "output": "../../HousingApp/Common/HttpClient/HousingAppClient.cs"
+      "output": "AppClient.cs"
     }
   }
 }

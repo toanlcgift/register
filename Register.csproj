@@ -10,7 +10,6 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.3" />
         <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="3.1.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
         <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.20" />
@@ -29,7 +28,6 @@
     </ItemGroup>
 	<ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="NSwagTool\Templates\" />
     </ItemGroup>
 	<ItemGroup>
 	  <Content Update="nlog.config">
@@ -45,12 +43,12 @@
     </PropertyGroup>
     <Target Name="NSwag" AfterTargets="Build">
         <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
-        <Exec Command="$(NSwagExe_Core22) run NSwagTool/nswag.json /variables:configuration=$(Configuration)" IgnoreExitCode="true" />
+        <Exec Command="$(NSwagExe_Core31) run NSwagTool/nswag.json /variables:configuration=$(Configuration)" IgnoreExitCode="true" />
         <RemoveDir Directories="$(OutDir)References" />
     </Target>
     <Target Name="NSwagWin" AfterTargets="Build" Condition="'$(IsWindows)'=='true'">
         <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
-        <Exec Command="$(NSwagExe_Core22) run NSwagTool/nswag.json /variables:configuration=$(Configuration)" IgnoreExitCode="true" />
+        <Exec Command="$(NSwagExe_Core31) run NSwagTool/nswag.json /variables:configuration=$(Configuration)" IgnoreExitCode="true" />
         <RemoveDir Directories="$(OutDir)References" />
     </Target>
 </Project>

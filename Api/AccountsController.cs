@@ -43,7 +43,7 @@ namespace Register.Api
 
         // PUT: api/Accounts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAccount(int id, Account account)
+        public async Task<IActionResult> PutAccount(int id,[FromBody] Account account)
         {
             if (id != account.Id)
             {
@@ -73,7 +73,7 @@ namespace Register.Api
 
         // POST: api/Accounts
         [HttpPost]
-        public async Task<ActionResult<Account>> PostAccount(Account account)
+        public async Task<ActionResult<Account>> PostAccount([FromBody]Account account)
         {
             _context.Account.Add(account);
             await _context.SaveChangesAsync();
